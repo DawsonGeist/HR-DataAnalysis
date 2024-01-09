@@ -14,6 +14,23 @@ from RF import rf
 from AdaBoost import ab
 from QuadraticDiscriminantAnalysis import qda
 
+def RunAnalysis(x_train, x_test, y_train, y_test):
+    # Random Forest
+    rf_y_predictions = rf(x_train, x_test, y_train, y_test)
+    # Check Scores
+    print('RF accuracy: {0:0.4f}'.format(accuracy_score(y_test, rf_y_predictions)))
+    
+    # AdaBoost
+    ab_y_predictions = ab(x_train, x_test, y_train, y_test)
+    # Check Scores
+    print('AB accuracy: {0:0.4f}'.format(accuracy_score(y_test, ab_y_predictions)))
+    
+    # Quadratic Discriminant Analysis
+    qda_y_predictions = qda(x_train, x_test, y_train, y_test)
+    # Check Scores
+    print('QDA accuracy: {0:0.4f}'.format(accuracy_score(y_test, qda_y_predictions)))
+
+
 # Main script
 if __name__ == "__main__":
     # Gather and Prepare our data
@@ -36,45 +53,16 @@ if __name__ == "__main__":
     # Split our data into train-test with a 70:30 ratio
     x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
-    # Random Forest
-    rf_y_predictions = rf(x_train, x_test, y_train, y_test)
-    # Check Scores
-    print('RF accuracy: {0:0.4f}'.format(accuracy_score(y_test, rf_y_predictions)))
-
-    # AdaBoost
-    ab_y_predictions = ab(x_train, x_test, y_train, y_test)
-    # Check Scores
-    print('AB accuracy: {0:0.4f}'.format(accuracy_score(y_test, ab_y_predictions)))
-    
-    # AdaBoost
-    qda_y_predictions = qda(x_train, x_test, y_train, y_test)
-    # Check Scores
-    print('QDA accuracy: {0:0.4f}'.format(accuracy_score(y_test, qda_y_predictions)))
-
-    # Colinear Variables are found in QDA
+    RunAnalysis(x_train, x_test, y_train, y_test)
 
     # Do PCA and repeat
     transformer = KernelPCA(n_components=3, kernel='linear')
     X_transformed = transformer.fit_transform(X)
     
-
     # Split our data into train-test with a 70:30 ratio
     x_train, x_test, y_train, y_test = train_test_split(X_transformed, y, test_size=0.33, random_state=42)
-
-    # Random Forest
-    rf_y_predictions = rf(x_train, x_test, y_train, y_test)
-    # Check Scores
-    print('RF accuracy: {0:0.4f}'.format(accuracy_score(y_test, rf_y_predictions)))
-
-    # AdaBoost
-    ab_y_predictions = ab(x_train, x_test, y_train, y_test)
-    # Check Scores
-    print('AB accuracy: {0:0.4f}'.format(accuracy_score(y_test, ab_y_predictions)))
     
-    # AdaBoost
-    qda_y_predictions = qda(x_train, x_test, y_train, y_test)
-    # Check Scores
-    print('QDA accuracy: {0:0.4f}'.format(accuracy_score(y_test, qda_y_predictions)))
+    RunAnalysis(x_train, x_test, y_train, y_test)
 
     # Plot actual values to visualize data
     x_red = []
@@ -121,6 +109,7 @@ if __name__ == "__main__":
     axs[0].axhline(y = 1810, color = 'g', linestyle = '-') 
     axs[0].axhline(y = 5500, color = 'g', linestyle = '-') 
     axs[0].axhline(y = 8900, color = 'g', linestyle = '-')
+    axs[0].title.set_text('All Employees')
 
     #Test
 
@@ -133,6 +122,7 @@ if __name__ == "__main__":
     axs[1].axhline(y = 1810, color = 'g', linestyle = '-') 
     axs[1].axhline(y = 5500, color = 'g', linestyle = '-') 
     axs[1].axhline(y = 8900, color = 'g', linestyle = '-')
+    axs[1].title.set_text(f'Employee #{employee}')
     plt.show()
 
 
