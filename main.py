@@ -122,6 +122,8 @@ if __name__ == "__main__":
     axs[0].axhline(y = 5500, color = 'g', linestyle = '-') 
     axs[0].axhline(y = 8900, color = 'g', linestyle = '-')
 
+    #Test
+
     # Plot one person
     employee = 1
     x_demo = transformer.transform(np.array([X[employee]]))
