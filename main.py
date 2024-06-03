@@ -29,6 +29,9 @@ def RunAnalysis(x_train, x_test, y_train, y_test):
     qda_y_predictions = qda(x_train, x_test, y_train, y_test)
     # Check Scores
     print('QDA accuracy: {0:0.4f}'.format(accuracy_score(y_test, qda_y_predictions)))
+    print('QDA precision: {0:0.4f}'.format(precision_score(y_test, qda_y_predictions)))
+    print('QDA f1_score: {0:0.4f}'.format(f1_score(y_test, qda_y_predictions)))
+    print('QDA recall: {0:0.4f}'.format(recall_score(y_test, qda_y_predictions)))
 
 
 # Main script
